@@ -11,41 +11,60 @@ namespace xCarpaccio.client
         public static Bill CalculerBill(Order commande)
         {
             Bill facture = new Bill();
-            decimal totalTaxe = 0m;
-            decimal articleHT = 0m;
-            decimal totalHT = 0m;
+            decimal[] totalPrices = new decimal[commande.Prices.Length];
 
             for (int i = 0; i < commande.Prices.Length; i++)
             {
-                articleHT = commande.Prices[i]*commande.Quantities[i];
-                totalHT += articleHT;
-
                 //Calcul des taxes relatives au pays
-                commande.Country.ToUpper();
+
                 switch (commande.Country)
                 {
                     case "GER":
-                        totalTaxe = Math.Round(1.20m,2);
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
                         break;
                     case "ES":
-                        totalTaxe = Math.Round(1.19m, 2);
+                        totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.19m;
                         break;
                     case "AT":
-                        totalTaxe = Math.Round(1.22m, 2);
+                        totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.22m;
                         break;
 
                 };
-              }
-            facture.total = Math.Round((totalTaxe * totalHT), 2);
-            //Applcation des réductions
+                
 
-            if (totalTaxe >= 50000)
+            }
+            decimal total = totalPrices.Sum();
+            //Applcation des réductions
+            if (total >= 1000)
             {
-                facture.total = Math.Round((facture.total*0.85m), 2);
+                decimal reduction = total * 0.03m;
+                total = total - reduction;
+            }
+            else if (total >= 5000)
+            {
+                decimal reduction = total * 0.05m;
+                total = total - reduction;
+            }
+            else if (total >= 7000)
+            {
+                decimal reduction = total * 0.07m;
+                total = total - reduction;
+            }
+            else if (total >= 10000)
+            {
+                decimal reduction = total * 0.10m;
+                total = total - reduction;
+            }
+            else if (total >= 50000)
+            {
+                decimal reduction = total * 0.15m;
+                total = total - reduction;
             }
 
-
-            return facture;
+            total = Math.Round(total, 2);
+            Bill bill = new Bill();
+            bill.total = total;
+            return bill;
         }
     }
 }
