@@ -11,8 +11,8 @@ namespace xCarpaccio.client
         public static Bill CalculerBill(Order commande)
         {
             Bill facture = new Bill();
-            if (commande.Reduction!="STANDARD")
-                return null;
+            //if (commande.Reduction!="STANDARD")
+            //    return null;
 
             decimal[] totalPrices = new decimal[commande.Prices.Length];
 
@@ -22,19 +22,6 @@ namespace xCarpaccio.client
 
                 switch (commande.Country)
                 {
-                    //case "GER":
-                    //    totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
-                    //    break;
-                    //case "ES":
-                    //    totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.19m;
-                    //    break;
-                    //case "AT":
-                    //    totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.22m;
-                    //    break;
-                    //case "UK":
-                    //    totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.22m;
-                    //    break;
-                    //totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) *
                     case "ES":
                         totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.19m;
                         break;
@@ -128,35 +115,44 @@ namespace xCarpaccio.client
             }
             decimal total = totalPrices.Sum();
             //Applcation des réductions
-            if (total >= 1000)
-            {
-                decimal reduction = total * 0.03m;
-                total = total - reduction;
-            }
-            else if (total >= 5000)
-            {
-                decimal reduction = total * 0.05m;
-                total = total - reduction;
-            }
-            else if (total >= 7000)
-            {
-                decimal reduction = total * 0.07m;
-                total = total - reduction;
-            }
-            else if (total >= 10000)
-            {
-                decimal reduction = total * 0.10m;
-                total = total - reduction;
-            }
-            else if (total >= 50000)
-            {
-                decimal reduction = total * 0.15m;
-                total = total - reduction;
-            }
-
-            total = Math.Round(total, 2);
             Bill bill = new Bill();
-            bill.total = total;
+            if (commande.Reduction == "PAY THE PRICE")
+                bill.total = Math.Round(total,2);
+            else if (commande.Reduction == "STANDARD")
+            {
+                if (total >= 1000)
+                {
+                    decimal reduction = total*0.03m;
+                    total = total - reduction;
+                }
+                else if (total >= 5000)
+                {
+                    decimal reduction = total*0.05m;
+                    total = total - reduction;
+                }
+                else if (total >= 7000)
+                {
+                    decimal reduction = total*0.07m;
+                    total = total - reduction;
+                }
+                else if (total >= 10000)
+                {
+                    decimal reduction = total*0.10m;
+                    total = total - reduction;
+                }
+                else if (total >= 50000)
+                {
+                    decimal reduction = total*0.15m;
+                    total = total - reduction;
+                }
+
+                total = Math.Round(total, 2);
+                bill.total = total;
+            }
+            else
+            {
+                bill = null;
+            }
             return bill;
         }
     }
