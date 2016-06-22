@@ -7,10 +7,13 @@ namespace xCarpaccio.client
 {
     public class ConstructBill
     {
-        private static Decimal tax;
+
         public static Bill CalculerBill(Order commande)
         {
             Bill facture = new Bill();
+            if (commande.Reduction!="STANDARD")
+                return null;
+
             decimal[] totalPrices = new decimal[commande.Prices.Length];
 
             for (int i = 0; i < commande.Prices.Length; i++)
@@ -19,16 +22,106 @@ namespace xCarpaccio.client
 
                 switch (commande.Country)
                 {
-                    case "GER":
-                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
-                        break;
+                    //case "GER":
+                    //    totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
+                    //    break;
+                    //case "ES":
+                    //    totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.19m;
+                    //    break;
+                    //case "AT":
+                    //    totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.22m;
+                    //    break;
+                    //case "UK":
+                    //    totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.22m;
+                    //    break;
+                    //totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) *
                     case "ES":
-                        totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.19m;
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.19m;
                         break;
                     case "AT":
                         totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.22m;
                         break;
-
+                    case "DE":
+                        totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.20m;
+                        break;
+                    case "UK":
+                        totalPrices[i] = (commande.Prices[i] * commande.Quantities[i]) * 1.21m;
+                        break;
+                    case "FR":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
+                        break;
+                    case "IT":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.25m;
+                        break;
+                    case "PL":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.21m;
+                        break;
+                    case "RO":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
+                        break;
+                    case "NL":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
+                        break;
+                    case "BE":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.24m;
+                        break;
+                    case "EL":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
+                        break;
+                    case "CZ":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.19m;
+                        break;
+                    case "PT":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.23m;
+                        break;
+                    case "HU":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.27m;
+                        break;
+                    case "SE":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.23m;
+                        break;
+                    case "BG":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.21m;
+                        break;
+                    case "DK":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.21m;
+                        break;
+                    case "FI":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.17m;
+                        break;
+                    case "SK":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.18m;
+                        break;
+                    case "IE":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.21m;
+                        break;
+                    case "HR":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.23m;
+                        break;
+                    case "LT":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.23m;
+                        break;
+                    case "SI":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.24m;
+                        break;
+                    case "LV":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
+                        break;
+                    case "EE":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.22m;
+                        break;
+                    case "CY":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.21m;
+                        break;
+                    case "LU":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.25m;
+                        break;
+                    case "MT":
+                        totalPrices[i] = (commande.Prices[i]*commande.Quantities[i])*1.20m;
+                        break;
+                    default:
+                        return null;
+                 
                 };
                 
 

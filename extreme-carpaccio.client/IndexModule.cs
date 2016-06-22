@@ -22,8 +22,11 @@ namespace xCarpaccio.client
 
                 var order = this.Bind<Order>();
                 Bill bill = null;
-                //bill = ConstructBill.CalculerBill(order);
-
+                bill = ConstructBill.CalculerBill(order);
+                if (bill == null)
+                {
+                    return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
+                }
                 //return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
                 //TODO: do something with order and return a bill if possible
                 // If you manage to get the result, return a Bill object (JSON serialization is done automagically)
