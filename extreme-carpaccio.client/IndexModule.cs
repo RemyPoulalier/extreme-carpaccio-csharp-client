@@ -20,19 +20,35 @@ namespace xCarpaccio.client
                     Console.WriteLine("Order received: {0}", reader.ReadToEnd());
                 }
 
-                var order = this.Bind<Order>();
-                Bill bill = null;
-                bill = ConstructBill.CalculerBill(order);
-                if (bill == null)
-                {
-                    return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
-                }
-                //return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
-                //TODO: do something with order and return a bill if possible
-                // If you manage to get the result, return a Bill object (JSON serialization is done automagically)
-                // Else return a HTTP 404 error : return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
                 
-                return bill;
+
+                //Construction de la grille de taxe
+                GrilleTaxe grille = new GrilleTaxe();
+                String[] pays = new[] {"DE","UK","FR","IT","ES","PL","RO","NL","BE","EL","CZ","PT","HU","SE","AT","BG","DK","FI","SK","IE","HR","LT","SI","LV","EE","CY","LU","MT"};
+                Decimal[] reduction = new[] {1.20m, 1.21m, 1.20m, 1.25m, 1.19m, 1.21m, 1.20m};
+                
+
+                try
+                {
+                    var order = this.Bind<Order>();
+                    Bill bill = null;
+                    bill = ConstructBill.CalculerBill(order);
+                    if (bill == null)
+                    {
+                        return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
+                    }
+                    //return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
+                    //TODO: do something with order and return a bill if possible
+                    // If you manage to get the result, return a Bill object (JSON serialization is done automagically)
+                    // Else return a HTTP 404 error : return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
+
+                    return bill;
+                }
+                catch (Exception e )
+                {
+                  return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
+                }
+
             };
 
             Post["/feedback"] = _ =>

@@ -114,6 +114,8 @@ namespace xCarpaccio.client
 
             }
             decimal total = totalPrices.Sum();
+
+
             //Applcation des réductions
             Bill bill = new Bill();
             if (commande.Reduction == "PAY THE PRICE")
