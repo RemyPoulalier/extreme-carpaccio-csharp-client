@@ -30,7 +30,10 @@ namespace xCarpaccio.client
                     case "ES":
                         totalTaxe = Math.Round(1.19m, 2);
                         break;
-                        
+                    case "AT":
+                        totalTaxe = Math.Round(1.22m, 2);
+                        break;
+
                 };
               }
             facture.total = Math.Round((totalTaxe * totalHT), 2);
